@@ -1,0 +1,32 @@
+[
+  {
+    "id_SiteVar": 1,
+    "Variable": "NombreSitio",
+    "Activo": 1,
+    "Descripcion": "Futura Sonrisa"
+  },
+  {
+    "id_SiteVar": 2,
+    "Variable": "Logo",
+    "Activo": 1,
+    "Descripcion": ""
+  },
+  {
+    "id_SiteVar": 3,
+    "Variable": "ColorPrimario",
+    "Activo": 1,
+    "Descripcion": "#0d6efd"
+  },
+  {
+    "id_SiteVar": 4,
+    "Variable": "ColorSecundario",
+    "Activo": 1,
+    "Descripcion": "#198754"
+  },
+  {
+    "id_SiteVar": 5,
+    "Variable": "Fondo",
+    "Activo": 1,
+    "Descripcion": "#f8f9fa"
+  }
+]

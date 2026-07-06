@@ -1,0 +1,187 @@
+[
+  {
+    "id_Patologia": 1,
+    "Patologia": "Diabetes",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 2,
+    "Patologia": "HTA",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 3,
+    "Patologia": "Cardiopatías",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 4,
+    "Patologia": "Neoplasias",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 5,
+    "Patologia": "Epilepsia",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 6,
+    "Patologia": "Malformaciones",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 7,
+    "Patologia": "SIDA",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 8,
+    "Patologia": "ER",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 9,
+    "Patologia": "Hepatitis",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 10,
+    "Patologia": "Artritis",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 11,
+    "Patologia": "Otra",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 12,
+    "Patologia": "Sano",
+    "AntFamiliar": 1
+  },
+  {
+    "id_Patologia": 13,
+    "Patologia": "Varicela",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 14,
+    "Patologia": "Rubéola",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 15,
+    "Patologia": "Sarampión",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 16,
+    "Patologia": "Parotiditis",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 17,
+    "Patologia": "Tosferina",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 18,
+    "Patologia": "Escarlatina",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 19,
+    "Patologia": "Parasitosis",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 20,
+    "Patologia": "Hepatitis",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 21,
+    "Patologia": "SIDA",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 22,
+    "Patologia": "Asma",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 23,
+    "Patologia": "Disfunciones",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 24,
+    "Patologia": "Hipertensión",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 25,
+    "Patologia": "Cáncer",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 26,
+    "Patologia": "Transm_Sex",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 27,
+    "Patologia": "Epilepsia",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 28,
+    "Patologia": "Amigdalitis",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 29,
+    "Patologia": "Tuberculosis",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 30,
+    "Patologia": "Fiebre_reumática",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 31,
+    "Patologia": "Diabetes",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 32,
+    "Patologia": "Enf_Cardiovasculares",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 33,
+    "Patologia": "Artritis",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 34,
+    "Patologia": "Traumatismos",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 35,
+    "Patologia": "Intervenciones",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 36,
+    "Patologia": "Transfusiones",
+    "AntFamiliar": 0
+  },
+  {
+    "id_Patologia": 37,
+    "Patologia": "Alergias",
+    "AntFamiliar": 0
+  }
+]

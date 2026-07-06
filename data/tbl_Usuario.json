@@ -1,0 +1,42 @@
+[
+  {
+    "id_Usuario": 1,
+    "Email": "DoctoraAngela@email.com",
+    "Telefono": 1234567890,
+    "Pass": "MQAyADMANAA1ADYANwA4ADkA",
+    "FechaCreado": "2021-07-13 08:27:16.65",
+    "FechaModificado": "2021-07-13 08:27:16.65",
+    "Activo": 1,
+    "Temporal": 0
+  },
+  {
+    "id_Usuario": 2,
+    "Email": "paciente.ejemplo@gmail.com",
+    "Telefono": 0,
+    "Pass": "cABhAGMAaQBlAG4AdABlADEAMgAzAA==",
+    "FechaCreado": "2026-07-06 07:35:07",
+    "FechaModificado": "2026-07-06 07:35:07",
+    "Activo": 0,
+    "Temporal": 0
+  },
+  {
+    "id_Usuario": 3,
+    "Email": "Angela@smileforever.com",
+    "Telefono": 0,
+    "Pass": "MQAyADMAMQAyADMA",
+    "FechaCreado": "2026-07-06 07:42:52",
+    "FechaModificado": "2026-07-06 07:42:52",
+    "Activo": 1,
+    "Temporal": 0
+  },
+  {
+    "id_Usuario": 4,
+    "Email": "Eduardo@smileforever.com",
+    "Telefono": 0,
+    "Pass": "MQAyADMAMQAyADMA",
+    "FechaCreado": "2026-07-06 07:46:28",
+    "FechaModificado": "2026-07-06 07:46:28",
+    "Activo": 1,
+    "Temporal": 0
+  }
+]
