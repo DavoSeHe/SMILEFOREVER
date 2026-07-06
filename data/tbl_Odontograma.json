@@ -1,0 +1,366 @@
+[
+  {
+    "id_Odontograma": 1,
+    "id_Diente": 18,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 2,
+    "id_Diente": 17,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 3,
+    "id_Diente": 16,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 4,
+    "id_Diente": 15,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 5,
+    "id_Diente": 14,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 6,
+    "id_Diente": 13,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 7,
+    "id_Diente": 12,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 8,
+    "id_Diente": 11,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 9,
+    "id_Diente": 21,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 10,
+    "id_Diente": 22,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 11,
+    "id_Diente": 23,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 12,
+    "id_Diente": 24,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 13,
+    "id_Diente": 25,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 14,
+    "id_Diente": 26,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 15,
+    "id_Diente": 27,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 16,
+    "id_Diente": 28,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 17,
+    "id_Diente": 55,
+    "Formato": 0,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 18,
+    "id_Diente": 54,
+    "Formato": 0,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 19,
+    "id_Diente": 53,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 20,
+    "id_Diente": 52,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 21,
+    "id_Diente": 51,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 22,
+    "id_Diente": 61,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 23,
+    "id_Diente": 62,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 24,
+    "id_Diente": 63,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 25,
+    "id_Diente": 64,
+    "Formato": 0,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 26,
+    "id_Diente": 65,
+    "Formato": 0,
+    "id_MapaOdontograma": 18,
+    "nivel": "Superior"
+  },
+  {
+    "id_Odontograma": 27,
+    "id_Diente": 85,
+    "Formato": 0,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 28,
+    "id_Diente": 84,
+    "Formato": 0,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 29,
+    "id_Diente": 83,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 30,
+    "id_Diente": 82,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 31,
+    "id_Diente": 81,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 32,
+    "id_Diente": 71,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 33,
+    "id_Diente": 72,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 34,
+    "id_Diente": 73,
+    "Formato": 0,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 35,
+    "id_Diente": 74,
+    "Formato": 0,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 36,
+    "id_Diente": 75,
+    "Formato": 0,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 37,
+    "id_Diente": 48,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 38,
+    "id_Diente": 47,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 39,
+    "id_Diente": 46,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 40,
+    "id_Diente": 45,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 41,
+    "id_Diente": 44,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 42,
+    "id_Diente": 43,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 43,
+    "id_Diente": 42,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 44,
+    "id_Diente": 41,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 45,
+    "id_Diente": 31,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 46,
+    "id_Diente": 32,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 47,
+    "id_Diente": 33,
+    "Formato": 1,
+    "id_MapaOdontograma": 17,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 48,
+    "id_Diente": 34,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 49,
+    "id_Diente": 35,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 50,
+    "id_Diente": 36,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 51,
+    "id_Diente": 37,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  },
+  {
+    "id_Odontograma": 52,
+    "id_Diente": 38,
+    "Formato": 1,
+    "id_MapaOdontograma": 18,
+    "nivel": "Inferior"
+  }
+]

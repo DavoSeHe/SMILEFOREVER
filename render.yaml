@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: smileforever-backend
+    env: docker
+    dockerfilePath: Dockerfile
+    dockerContext: .
+    plan: free # Cambiar a 'starter' si deseas usar un disco persistente
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: HOST
+        value: "*"
+    # Nota: Si cambias el plan a 'starter', puedes descomentar las siguientes líneas
+    # para tener almacenamiento persistente para tus archivos JSON:
+    # disk:
+    #   name: smileforever-data
+    #   mountPath: /app/data
+    #   sizeGB: 1

@@ -1,0 +1,26 @@
+[
+  {
+    "id_Tipificacion": 1,
+    "Nivel": "Verde",
+    "Descripcion": "Sano o antecedentes menores",
+    "Color": "#28a745"
+  },
+  {
+    "id_Tipificacion": 2,
+    "Nivel": "Amarillo",
+    "Descripcion": "Cuidado preventivo / antecedentes leves",
+    "Color": "#ffc107"
+  },
+  {
+    "id_Tipificacion": 3,
+    "Nivel": "Naranja",
+    "Descripcion": "Riesgo moderado / antecedentes de HTA o Cardiopatía",
+    "Color": "#fd7e14"
+  },
+  {
+    "id_Tipificacion": 4,
+    "Nivel": "Rojo",
+    "Descripcion": "Alto riesgo / antecedentes críticos o múltiples",
+    "Color": "#dc3545"
+  }
+]

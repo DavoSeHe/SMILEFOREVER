@@ -1,0 +1,571 @@
+/* Modern CSS for Dental Clinic Management App */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #198754;
+    --background-color: #f8f9fa;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--background-color);
+    color: #1e293b;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease;
+}
+
+/* Glassmorphism Classes */
+.glass-panel {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--glass-shadow);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.03);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px 0 rgba(0, 0, 0, 0.06);
+}
+
+/* Sidebar Styling */
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: white;
+    z-index: 100;
+    transition: transform 0.3s ease;
+}
+
+.sidebar .nav-link {
+    color: #94a3b8;
+    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin: 4px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.sidebar .nav-link.active {
+    background: linear-gradient(90deg, var(--primary-color) 0%, rgba(13, 110, 253, 0.6) 100%);
+    box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* Main Content area */
+.main-wrapper {
+    margin-left: 260px;
+    padding: 30px;
+    min-height: 100vh;
+    transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 991.98px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    .main-wrapper {
+        margin-left: 0;
+        padding: 15px;
+    }
+}
+
+/* Header bar */
+.top-navbar {
+    padding: 15px 25px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 16px;
+}
+
+/* Odontograma styling */
+.odontograma-container {
+    padding: 20px;
+    border-radius: 16px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+.teeth-row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    gap: 8px;
+    margin-bottom: 20px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+}
+
+.tooth-box {
+    width: 65px;
+    min-width: 65px;
+    padding: 4px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+.tooth-box:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(13, 110, 253, 0.15);
+    transform: scale(1.05);
+}
+
+.tooth-box.selected {
+    border-color: var(--primary-color);
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+.tooth-svg {
+    height: 80px;
+    width: 100%;
+}
+
+.odontograma-legend {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #f8fafc;
+}
+
+/* Signature Pad (Canvas) */
+.signature-container {
+    border: 2px dashed #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    position: relative;
+    width: 100%;
+    height: 180px;
+}
+
+.signature-canvas {
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+}
+
+/* Before and After Image Slider */
+.before-after-slider {
+    position: relative;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.before-after-slider img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.before-after-slider .after-img-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    border-right: 3px solid white;
+}
+
+.before-after-slider .after-img-wrapper img {
+    width: 100%; /* Keeps dimensions matching container */
+    max-width: none;
+}
+
+.before-after-slider .slider-bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: ew-resize;
+    z-index: 10;
+}
+
+.before-after-slider .slider-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    z-index: 9;
+    pointer-events: none;
+}
+
+.before-after-slider .slider-button::before,
+.before-after-slider .slider-button::after {
+    content: '';
+    border: solid #1e293b;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+}
+
+.before-after-slider .slider-button::before {
+    transform: rotate(135deg);
+    margin-right: 2px;
+}
+
+.before-after-slider .slider-button::after {
+    transform: rotate(-45deg);
+    margin-left: 2px;
+}
+
+/* Pathologies Relative Cards */
+.relative-card {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    background: white;
+    transition: all 0.2s ease;
+}
+
+.relative-card:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(13, 110, 253, 0.02);
+}
+
+.relative-card.active {
+    border-color: var(--primary-color);
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Smart Calendar Styles */
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    background-color: #e2e8f0;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.calendar-header-day {
+    text-align: center;
+    font-weight: 600;
+    padding: 10px;
+    background-color: #f8fafc;
+    color: #64748b;
+}
+
+.calendar-cell {
+    background-color: white;
+    min-height: 100px;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.calendar-cell:hover {
+    background-color: #f1f5f9;
+}
+
+.calendar-cell.other-month {
+    color: #cbd5e1;
+    background-color: #f8fafc;
+}
+
+.calendar-cell.today {
+    background-color: rgba(13, 110, 253, 0.06);
+    border: 2px solid var(--primary-color);
+}
+
+.calendar-cell.non-working {
+    background-color: #fee2e2;
+    color: #ef4444;
+    cursor: not-allowed;
+}
+
+.calendar-cell.non-working:hover {
+    background-color: #fee2e2;
+}
+
+.calendar-badge {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-top: 2px;
+    display: block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.badge-espera { background-color: #fef3c7; color: #d97706; }
+.badge-atendido { background-color: #dcfce7; color: #15803d; }
+.badge-cancelado { background-color: #fee2e2; color: #b91c1c; }
+
+/* Status Bar for active selected patient */
+.patient-status-bar {
+    background: linear-gradient(90deg, #e0f2fe 0%, #bae6fd 100%);
+    border-left: 5px solid #0284c7;
+    border-radius: 8px;
+    padding: 12px 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Dynamic CSS classes overridden by catalogs settings */
+body.custom-theme {
+    background-color: var(--theme-fondo) !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeInUp 0.4s ease forwards;
+}
+
+/* Fix Bootstrap modal backdrop z-index overlay issue */
+.modal {
+    z-index: 1060 !important;
+}
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+/* Dynamic color overrides mapping Bootstrap to CSS custom properties */
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background-color: var(--primary-color) !important;
+    opacity: 0.9;
+}
+.btn-outline-primary {
+    color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+}
+.btn-outline-primary:hover, .btn-outline-primary:active, .btn-outline-primary:focus, .btn-check:checked + .btn-outline-primary {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+}
+.text-primary {
+    color: var(--primary-color) !important;
+}
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}
+.border-primary {
+    border-color: var(--primary-color) !important;
+}
+
+/* Secondary (Success in app) overrides */
+.btn-success {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: white !important;
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active {
+    background-color: var(--secondary-color) !important;
+    opacity: 0.9;
+}
+.btn-outline-success {
+    color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+}
+.btn-outline-success:hover, .btn-outline-success:active, .btn-outline-success:focus {
+    background-color: var(--secondary-color) !important;
+    border-color: var(--secondary-color) !important;
+    color: white !important;
+}
+.text-success {
+    color: var(--secondary-color) !important;
+}
+.bg-success {
+    background-color: var(--secondary-color) !important;
+}
+
+.sidebar .nav-link.active {
+    background: var(--primary-color) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Custom Dental Loader Styling */
+#global-dental-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dental-loader-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.dental-loader-card {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 24px;
+    padding: 40px 50px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transform: scale(0.9);
+    animation: loaderPopIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes loaderPopIn {
+    to { transform: scale(1); }
+}
+
+.dental-loader-tooth-container {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dental-loader-tooth {
+    width: 70px;
+    height: 84px;
+    z-index: 2;
+    animation: toothFloat 2s ease-in-out infinite;
+}
+
+@keyframes toothFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-8px) rotate(3deg); }
+}
+
+/* Sparkle animation */
+.sparkle-star {
+    animation: sparkleGleam 1.5s ease-in-out infinite;
+    transform-origin: 70px 35px;
+}
+
+@keyframes sparkleGleam {
+    0%, 100% { transform: scale(0.5); opacity: 0.3; }
+    50% { transform: scale(1.3); opacity: 1; }
+}
+
+/* Polishing ring rotating around the tooth */
+.dental-loader-ring {
+    position: absolute;
+    width: 95px;
+    height: 35px;
+    border: 3px solid var(--primary-color);
+    border-radius: 50%;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+    z-index: 1;
+    animation: ringRotate 1.5s linear infinite;
+    transform: rotateX(70deg);
+}
+
+@keyframes ringRotate {
+    0% { transform: rotateX(70deg) rotateZ(0deg); }
+    100% { transform: rotateX(70deg) rotateZ(360deg); }
+}
+
+/* Bubbles rising (Whitening effect) */
+.dental-loader-bubble {
+    position: absolute;
+    background-color: rgba(13, 110, 253, 0.2);
+    border-radius: 50%;
+    z-index: 3;
+    bottom: 20px;
+    animation: bubbleRise 2s infinite ease-in;
+}
+
+.bubble-1 { width: 10px; height: 10px; left: 25px; animation-delay: 0s; animation-duration: 1.8s; }
+.bubble-2 { width: 7px; height: 7px; left: 55px; animation-delay: 0.5s; animation-duration: 2.2s; }
+.bubble-3 { width: 12px; height: 12px; left: 85px; animation-delay: 0.2s; animation-duration: 1.5s; }
+
+@keyframes bubbleRise {
+    0% { transform: translateY(0) scale(0.8); opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { transform: translateY(-70px) scale(1.2); opacity: 0; }
+}

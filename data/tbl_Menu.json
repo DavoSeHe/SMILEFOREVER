@@ -1,0 +1,74 @@
+[
+  {
+    "id_menu": 1,
+    "Menu": "Pacientes",
+    "Cadena": "<a href='#' class='nav-link dropdown-toggle' id='aPac' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Pacientes</a>",
+    "idPadre": 0
+  },
+  {
+    "id_menu": 2,
+    "Menu": "Calendario",
+    "Cadena": "<a href='#' class='nav-link' id='aCal' data-toggle='modal' data-target='#CalendarioModal'>Calendario</a>",
+    "idPadre": 0
+  },
+  {
+    "id_menu": 3,
+    "Menu": "Reportes",
+    "Cadena": "<a href='#' class='nav-link dropdown-toggle' id='aRep' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Reportes</a>",
+    "idPadre": 0
+  },
+  {
+    "id_menu": 4,
+    "Menu": "Perfil",
+    "Cadena": "<a href='#' class='nav-link dropdown-toggle' id='aPer' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>{Perfil}</a>",
+    "idPadre": 0
+  },
+  {
+    "id_menu": 5,
+    "Menu": "NoPaciente",
+    "Cadena": "<a href='#' class='dropdown-item'>No. Pacientes</a>",
+    "idPadre": 3
+  },
+  {
+    "id_menu": 6,
+    "Menu": "Entradas",
+    "Cadena": "<a href='#' class='dropdown-item'>Entradas</a>",
+    "idPadre": 3
+  },
+  {
+    "id_menu": 7,
+    "Menu": "Gastos",
+    "Cadena": "<a href='#' class='dropdown-item'>Gastos</a>",
+    "idPadre": 3
+  },
+  {
+    "id_menu": 8,
+    "Menu": "Configuraciones",
+    "Cadena": "<a  href='#' class='dropdown-item'>Configuraciones</a>",
+    "idPadre": 4
+  },
+  {
+    "id_menu": 9,
+    "Menu": "CambioContraseña",
+    "Cadena": "<a  href='#' class='dropdown-item'>Cambiar contraseña</a>",
+    "idPadre": 4
+  },
+  {
+    "id_menu": 10,
+    "Menu": "Salir",
+    "Cadena": "<a  href='#' class='dropdown-item'>Salir</a>",
+    "idPadre": 4
+  },
+  {
+    "id_menu": 1002,
+    "Menu": "Nuevo paciente",
+    "Cadena": "<a href='#' class='dropdown-item' onClick='f_btnNewPatient()'>Nuevo paciente</a>",
+    "idPadre": 1
+  },
+  {
+    "id_menu": 1003,
+    "Menu": "Buscar paciente",
+    "Cadena": "<a href='#' class='dropdown-item'>Buscar paciente</a>",
+    "idPadre": 1
+  }
+]

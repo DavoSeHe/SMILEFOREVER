@@ -1,0 +1,10 @@
+[
+  {
+    "id_TratPaciente": 1,
+    "FechaIniTrat": "2026-07-06 08:33:34",
+    "FechaFinTrat": null,
+    "id_Tratamiento": 3,
+    "id_User": 5,
+    "Presupuesto": 0
+  }
+]

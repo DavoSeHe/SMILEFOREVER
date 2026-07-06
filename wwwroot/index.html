@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futura Sonrisa - Portal Clínico Dental</title>
+    <!-- Bootstrap 5.3.2 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <style id="custom-theme-variables"></style>
+</head>
+<body>
+
+    <!-- LOGIN CONTAINER (Visible for all initially) -->
+    <div id="view-login" class="d-flex align-items-center justify-content-center min-vh-100 p-3">
+        <div class="card glass-panel p-4 p-md-5 w-100 animate-fade-in" style="max-width: 480px;">
+            <div class="text-center mb-4">
+                <img id="login-logo" src="" alt="Logo" class="mb-3" style="width: 130px; height: 130px; border-radius: 24px; object-fit: cover;">
+                <h3 class="fw-bold mb-1" id="login-site-name">Futura Sonrisa</h3>
+                <p class="text-muted small">Sistema de Gestión e Historial Clínico</p>
+            </div>
+            
+            <div id="login-error-alert" class="alert alert-danger d-none" role="alert"></div>
+
+            <form id="form-login">
+                <div class="mb-3">
+                    <label for="login-email" class="form-label fw-semibold">Correo Electrónico</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0"><i class="fa-regular fa-envelope text-muted"></i></span>
+                        <input type="email" id="login-email" class="form-control border-start-0" placeholder="ejemplo@correo.com" required value="DoctoraAngela@email.com">
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="d-flex justify-content-between mb-1">
+                        <label for="login-pass" class="form-label fw-semibold mb-0">Contraseña</label>
+                        <a href="#" id="btn-recover-pass" class="text-decoration-none small fw-semibold">¿Olvidó su contraseña?</a>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-lock text-muted"></i></span>
+                        <input type="password" id="login-pass" class="form-control border-start-0" placeholder="••••••••" required value="123456789">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100 py-2.5 fw-semibold rounded-3 shadow-sm">
+                    <i class="fa-solid fa-right-to-bracket me-2"></i>Ingresar al Sistema
+                </button>
+            </form>
+
+            <div class="mt-4 text-center text-muted small">
+                ¿Problemas de acceso? Contacte a soporte o asistente.
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APPLICATION CONTAINER (Hidden until login) -->
+    <div id="app-container" class="d-none">
+        
+        <!-- SIDEBAR -->
+        <aside class="sidebar d-flex flex-column justify-content-between shadow">
+            <div>
+                <div class="p-4 d-flex align-items-center gap-3 border-bottom border-secondary border-opacity-25">
+                    <img id="sidebar-logo" src="" alt="Logo" style="width: 42px; height: 42px; border-radius: 8px;">
+                    <div>
+                        <h5 class="fw-bold mb-0 text-white truncate" id="sidebar-site-name">Futura Sonrisa</h5>
+                        <span class="badge bg-primary px-2 py-1" style="font-size: 0.65rem;">Clínica Activa</span>
+                    </div>
+                </div>
+
+                <nav class="mt-4">
+                    <a href="#" class="nav-link active" data-view="dashboard">
+                        <i class="fa-solid fa-house"></i> Dashboard
+                    </a>
+                    
+                    <!-- Doctor & Assistant only -->
+                    <a href="#" class="nav-link view-staff-only" data-view="registro">
+                        <i class="fa-solid fa-users"></i> Registro Usuarios
+                    </a>
+                    <a href="#" class="nav-link view-staff-only" data-view="patologias">
+                        <i class="fa-solid fa-notes-medical"></i> Patologías
+                    </a>
+                    
+                    <!-- Shared sections -->
+                    <a href="#" class="nav-link" data-view="odontograma">
+                        <i class="fa-solid fa-tooth"></i> Historial y Odontograma
+                    </a>
+                    <a href="#" class="nav-link" data-view="presupuestos">
+                        <i class="fa-solid fa-file-invoice-dollar"></i> Presupuestos y Pagos
+                    </a>
+                    <a href="#" class="nav-link" data-view="agenda">
+                        <i class="fa-solid fa-calendar-days"></i> Agenda Inteligente
+                    </a>
+
+                    <!-- Doctor & Assistant only -->
+                    <a href="#" class="nav-link view-staff-only" data-view="reportes">
+                        <i class="fa-solid fa-chart-line"></i> Reportes Clínicos
+                    </a>
+                    <a href="#" class="nav-link view-staff-only" data-view="catalogos">
+                        <i class="fa-solid fa-gears"></i> Catálogos e Config.
+                    </a>
+                </nav>
+            </div>
+
+            <!-- Logged-in User Profile Card at bottom -->
+            <div class="p-3 border-top border-secondary border-opacity-25 bg-black bg-opacity-20">
+                <div class="d-flex align-items-center gap-3">
+                    <img id="user-avatar" src="" alt="Foto" class="rounded-circle shadow-sm" style="width: 48px; height: 48px; object-fit: cover;">
+                    <div class="overflow-hidden">
+                        <h6 class="fw-bold mb-0 text-white text-truncate" id="user-display-name">Angela Arellano</h6>
+                        <small class="text-muted d-block text-truncate" id="user-display-role">Doctora_Admin</small>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 mt-3">
+                    <button id="btn-open-change-pass" class="btn btn-sm btn-outline-secondary w-50 text-white border-secondary border-opacity-50"><i class="fa-solid fa-key me-1"></i>Clave</button>
+                    <button id="btn-logout" class="btn btn-sm btn-danger w-50"><i class="fa-solid fa-power-off me-1"></i>Salir</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN WRAPPER -->
+        <main class="main-wrapper">
+            
+            <!-- TOP NAVBAR -->
+            <header class="top-navbar glass-panel shadow-sm mb-4">
+                <div class="d-flex align-items-center gap-3">
+                    <button class="btn btn-light d-lg-none" id="btn-toggle-sidebar">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h4 class="fw-bold mb-0" id="current-view-title">Dashboard</h4>
+                </div>
+
+                <!-- Doctor / Assistant only: Patient Search Bar -->
+                <div class="d-flex align-items-center gap-3" id="patient-search-container">
+                    <div class="input-group shadow-sm" style="width: 320px;">
+                        <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-magnifying-glass text-muted"></i></span>
+                        <input type="text" id="global-patient-search" class="form-control border-start-0" placeholder="Buscar paciente activo...">
+                        <ul class="dropdown-menu w-100" id="patient-search-results" style="max-height: 250px; overflow-y: auto;"></ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- SELECTED PATIENT BAR (Adapts to loaded patient profile) -->
+            <div id="patient-context-bar" class="patient-status-bar d-none animate-fade-in">
+                <div class="d-flex align-items-center gap-3">
+                    <img id="patient-context-photo" src="" alt="Foto Paciente" class="rounded-circle border border-white" style="width: 50px; height: 50px; object-fit: cover;">
+                    <div>
+                        <h5 class="fw-bold mb-0 text-dark"><i class="fa-solid fa-user-check me-2 text-primary"></i>Paciente Activo: <span id="patient-context-name">Nombre Completo</span></h5>
+                        <small class="text-muted">Tipificación antecedente: <span class="badge" id="patient-context-typification">Nivel</span></small>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-sm btn-outline-danger" id="btn-clear-patient-context"><i class="fa-solid fa-xmark me-1"></i>Cerrar Paciente</button>
+                </div>
+            </div>
+
+            <!-- VIEW: DASHBOARD -->
+            <div id="view-dashboard" class="app-view animate-fade-in">
+                <div class="row g-4">
+                    <div class="col-md-8">
+                        <div class="card glass-panel p-4 mb-4">
+                            <h2 class="fw-bold text-primary mb-3">¡Bienvenido a <span id="dashboard-clinic-name">Futura Sonrisa</span>!</h2>
+                            <p class="lead">Sistema integral para la administración clínica de expedientes odontológicos, citas y finanzas.</p>
+                            <hr class="my-4">
+                            <div class="row g-4 text-center">
+                                <div class="col-sm-4">
+                                    <div class="p-3 bg-light rounded-3">
+                                        <h3 class="fw-bold text-dark mb-1" id="dash-stat-patients">0</h3>
+                                        <p class="text-muted mb-0 small">Pacientes Registrados</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="p-3 bg-light rounded-3">
+                                        <h3 class="fw-bold text-dark mb-1" id="dash-stat-appointments">0</h3>
+                                        <p class="text-muted mb-0 small">Citas Pendientes Hoy</p>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="p-3 bg-light rounded-3">
+                                        <h3 class="fw-bold text-dark mb-1" id="dash-stat-payments">$0.00</h3>
+                                        <p class="text-muted mb-0 small">Ingresos Mensuales</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Today's appointments -->
+                        <div class="card glass-panel p-4">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-clock-rotate-left me-2 text-warning"></i>Citas del Día</h5>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Hora</th>
+                                            <th>Paciente</th>
+                                            <th>Estado</th>
+                                            <th>Motivo</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashboard-appointments-list">
+                                        <tr>
+                                            <td colspan="5" class="text-center text-muted py-4">No hay citas registradas para hoy.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <!-- Quick actions panel -->
+                        <div class="card glass-panel p-4 mb-4">
+                            <h5 class="fw-bold mb-3">Acciones Rápidas</h5>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-outline-primary text-start p-3 rounded-3 view-staff-only" id="dash-action-new-patient">
+                                    <i class="fa-solid fa-user-plus me-2 text-primary"></i> Registrar Nuevo Paciente
+                                </button>
+                                <button class="btn btn-outline-primary text-start p-3 rounded-3" id="dash-action-new-appt">
+                                    <i class="fa-solid fa-calendar-plus me-2 text-success"></i> Agendar Cita Dental
+                                </button>
+                                <button class="btn btn-outline-primary text-start p-3 rounded-3 view-staff-only" id="dash-action-new-config">
+                                    <i class="fa-solid fa-sliders me-2 text-warning"></i> Configurar Clínica
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Current site details card -->
+                        <div class="card glass-panel p-4 text-center">
+                            <div class="p-3 bg-primary bg-opacity-10 rounded-circle d-inline-block mx-auto mb-3" style="width: 70px; height: 70px;">
+                                <i class="fa-solid fa-teeth text-primary" style="font-size: 2.2rem;"></i>
+                            </div>
+                            <h5 class="fw-bold mb-1" id="dash-card-site-name">Futura Sonrisa</h5>
+                            <p class="text-muted small">Módulos Odontogramas &amp; Pagos</p>
+                            <span class="badge bg-success px-3 py-2 rounded-pill">Sistema Conectado</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: USER REGISTRATION (Doctor & Assistant only) -->
+            <div id="view-registro" class="app-view d-none animate-fade-in">
+                <div class="card glass-panel p-4 mb-4">
+                    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                        <h5 class="fw-bold mb-0">Gestión de Usuarios de la Clínica</h5>
+                        <button class="btn btn-primary btn-sm rounded-pill px-3" id="btn-new-user-form">
+                            <i class="fa-solid fa-plus me-1"></i> Registrar Usuario
+                        </button>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre</th>
+                                    <th>Email</th>
+                                    <th>Teléfono</th>
+                                    <th>Perfil</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-list-tbody">
+                                <tr>
+                                    <td colspan="7" class="text-center py-4">Cargando usuarios...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- VIEW: PATHOLOGIES (Doctor & Assistant only) -->
+            <div id="view-patologias" class="app-view d-none animate-fade-in">
+                <div class="card glass-panel p-4 mb-4">
+                    <h5 class="fw-bold mb-4"><i class="fa-solid fa-notes-medical text-danger me-2"></i>Antecedentes Patológicos del Paciente</h5>
+                    
+                    <div class="alert alert-info" id="patologias-no-patient-alert">
+                        Debe de seleccionar a un Paciente activo en la barra de búsqueda superior para registrar sus antecedentes patológicos.
+                    </div>
+
+                    <div class="row g-4 d-none" id="patologias-content">
+                        <!-- Relatives selection grid -->
+                        <div class="col-md-5">
+                            <h6 class="fw-bold mb-3">Marcaje de Antecedentes Familiares / Personales</h6>
+                            <p class="text-muted small">Seleccione un miembro de la familia para abrir el modal de selección de patologías degenerativas.</p>
+                            
+                            <div class="d-grid gap-2">
+                                <div class="relative-card active" data-relative="Paciente">
+                                    <div class="fw-bold">Paciente (Antecedente Personal)</div>
+                                    <span class="badge bg-secondary mt-1" id="badge-count-Paciente">0 Marcados</span>
+                                </div>
+                                <div class="relative-card" data-relative="Madre">
+                                    <div class="fw-bold">Madre</div>
+                                    <span class="badge bg-secondary mt-1" id="badge-count-Madre">0 Marcados</span>
+                                </div>
+                                <div class="relative-card" data-relative="Padre">
+                                    <div class="fw-bold">Padre</div>
+                                    <span class="badge bg-secondary mt-1" id="badge-count-Padre">0 Marcados</span>
+                                </div>
+                                <div class="relative-card" data-relative="AbuelaMat">
+                                    <div class="fw-bold">Abuela Materna</div>
+                                    <span class="badge bg-secondary mt-1" id="badge-count-AbuelaMat">0 Marcados</span>
+                                </div>
+                                <div class="relative-card" data-relative="AbueloMat">
+                                    <div class="fw-bold">Abuelo Materno</div>
+                                    <span class="badge bg-secondary mt-1" id="badge-count-AbueloMat">0 Marcados</span>
+                                </div>
+                                <div class="relative-card" data-relative="AbuelaPat">
+                                    <div class="fw-bold">Abuela Paterna</div>
+                                    <span class="badge bg-secondary mt-1" id="badge-count-AbuelaPat">0 Marcados</span>
+                                </div>
+                                <div class="relative-card" data-relative="AbueloPat">
+                                    <div class="fw-bold">Abuelo Paterno</div>
+                                    <span class="badge bg-secondary mt-1" id="badge-count-AbueloPat">0 Marcados</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tipificacion & Observations -->
+                        <div class="col-md-7">
+                            <div class="card bg-light border-0 p-4 rounded-3 h-100 d-flex flex-column justify-content-between">
+                                <div>
+                                    <h6 class="fw-bold mb-4">Categorización y Observaciones</h6>
+                                    
+                                    <div class="mb-4">
+                                        <label for="patologia-tipificacion" class="form-label fw-bold">Tipificación de Paciente (Nivel de Antecedente)</label>
+                                        <select id="patologia-tipificacion" class="form-select form-select-lg">
+                                            <option value="">Seleccione...</option>
+                                            <!-- Dynamically filled -->
+                                        </select>
+                                        <small class="text-muted mt-1 d-block">La tipificación define el color distintivo en el expediente clínico del paciente.</small>
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="patologia-observaciones" class="form-label fw-bold">Observaciones Generales de Antecedentes</label>
+                                        <textarea id="patologia-observaciones" class="form-control" rows="6" placeholder="Escriba comentarios adicionales sobre las enfermedades del paciente o sus familiares directos..."></textarea>
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary btn-lg w-100 py-3 shadow-sm" id="btn-save-patologias">
+                                    <i class="fa-solid fa-floppy-disk me-2"></i>Guardar Expediente Patológico
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: ODONTOGRAM & CLINICAL HISTORY -->
+            <div id="view-odontograma" class="app-view d-none animate-fade-in">
+                <div class="alert alert-info" id="odontograma-no-patient-alert">
+                    Debe de seleccionar a un Paciente activo en la barra de búsqueda superior para cargar su odontograma e historial clínico.
+                </div>
+
+                <div class="row g-4 d-none" id="odontograma-content">
+                    <!-- Odontogram Panel -->
+                    <div class="col-12">
+                        <div class="card glass-panel p-4">
+                            <div class="d-flex justify-content-between align-items-center flex-wrap mb-4">
+                                <h5 class="fw-bold mb-0"><i class="fa-solid fa-tooth text-primary me-2"></i>Odontograma Clínico Interactivo</h5>
+                                <div class="btn-group shadow-sm">
+                                    <input type="radio" class="btn-check" name="odont-format" id="btn-odont-adult" checked value="1">
+                                    <label class="btn btn-outline-primary btn-sm" for="btn-odont-adult">Adulto</label>
+                                    <input type="radio" class="btn-check" name="odont-format" id="btn-odont-child" value="0">
+                                    <label class="btn btn-outline-primary btn-sm" for="btn-odont-child">Infantil</label>
+                                </div>
+                            </div>
+
+                            <div class="odontograma-container">
+                                <!-- Superior row -->
+                                <h6 class="text-center text-muted fw-bold mb-2">ARCADA SUPERIOR</h6>
+                                <div class="teeth-row" id="odontograma-superior-row"></div>
+                                
+                                <hr class="my-4">
+
+                                <!-- Inferior row -->
+                                <h6 class="text-center text-muted fw-bold mb-2">ARCADA INFERIOR</h6>
+                                <div class="teeth-row" id="odontograma-inferior-row"></div>
+                            </div>
+
+                            <div class="odontograma-legend text-muted small mt-3">
+                                <div><span class="badge bg-danger">Carie</span> Rojo = Caries</div>
+                                <div><span class="badge bg-success">Obtur</span> Obturado (Resina)</div>
+                                <div><span class="badge bg-dark">Perdi</span> Perdido (Falta diente)</div>
+                                <div><span class="badge bg-warning text-dark">Girov</span> Giroversión</div>
+                                <div><span class="badge bg-info">Inclu</span> Diente Incluido</div>
+                                <div><span class="badge bg-secondary">Organ</span> Órgano no vital</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Clinical History Notes & Before/After Comparison -->
+                    <div class="col-md-7">
+                        <div class="card glass-panel p-4 h-100">
+                            <h5 class="fw-bold mb-4"><i class="fa-solid fa-file-medical text-primary me-2"></i>Sección de Historia Clínica y Notas Médicas</h5>
+                            
+                            <!-- Add Medical Note Form (Hidden for Patient profile) -->
+                            <form id="form-medical-note" class="mb-4 bg-light p-3 rounded-3 border-0 view-staff-only">
+                                <h6 class="fw-bold mb-3">Nueva Nota Clínica</h6>
+                                <div class="mb-3">
+                                    <label for="history-treatment-notes" class="form-label fw-semibold">Comentario de tratamiento de cita *</label>
+                                    <textarea id="history-treatment-notes" class="form-control" rows="3" required placeholder="Escriba la nota médica de la cita..."></textarea>
+                                </div>
+
+                                <div class="row g-3 mb-3">
+                                    <div class="col-md-6">
+                                        <label for="history-before-img-file" class="form-label fw-semibold">Cargar Imagen (Antes)</label>
+                                        <input type="file" id="history-before-img-file" class="form-control form-control-sm" accept="image/*">
+                                        <input type="hidden" id="history-before-img-base64">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="history-after-img-file" class="form-label fw-semibold">Cargar Imagen (Después)</label>
+                                        <input type="file" id="history-after-img-file" class="form-control form-control-sm" accept="image/*">
+                                        <input type="hidden" id="history-after-img-base64">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="history-consent" class="form-label fw-semibold">Firma de Consentimiento Informado (Texto)</label>
+                                    <input type="text" id="history-consent" class="form-control form-control-sm" value="Acepto el tratamiento dental especificado en esta nota médica.">
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-plus me-1"></i>Agregar Nota Clínica</button>
+                            </form>
+
+                            <!-- Timeline of medical notes -->
+                            <h6 class="fw-bold mb-3">Historial de Evolución del Paciente</h6>
+                            <div id="clinical-notes-timeline" class="d-flex flex-column gap-3">
+                                <div class="text-center text-muted py-3">No hay notas registradas.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Side Panel: Tooth Treatment Assignment / Before & After Slider -->
+                    <div class="col-md-5">
+                        <!-- Tooth treatment assigner (Staff Only) -->
+                        <div class="card glass-panel p-4 mb-4 view-staff-only" id="tooth-assign-panel">
+                            <h5 class="fw-bold mb-3">Asignar Tratamiento al Diente <span id="assign-tooth-number" class="text-primary">#</span></h5>
+                            <div class="mb-3">
+                                <label for="assign-treatment-select" class="form-label fw-semibold">Seleccione Condición / Tratamiento:</label>
+                                <select id="assign-treatment-select" class="form-select">
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+                            <button class="btn btn-primary w-100" id="btn-save-tooth-treatment">
+                                <i class="fa-solid fa-check me-1"></i>Aplicar Tratamiento
+                            </button>
+                        </div>
+
+                        <!-- Before / After Slider Viewer -->
+                        <div class="card glass-panel p-4" id="before-after-view-panel">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-images text-success me-2"></i>Comparación Antes y Después</h5>
+                            <p class="text-muted small">Arrastre el control deslizante para comparar las imágenes de radiografías o fotografías clínicas guardadas.</p>
+                            
+                            <div class="before-after-slider mb-3 d-none" id="tooth-before-after-slider">
+                                <img id="slider-before-img" src="" alt="Antes">
+                                <div class="after-img-wrapper" id="slider-after-wrapper">
+                                    <img id="slider-after-img" src="" alt="Después">
+                                </div>
+                                <input type="range" min="0" max="100" value="50" class="slider-bar" id="before-after-bar-range">
+                                <div class="slider-button" id="before-after-divider-btn"></div>
+                            </div>
+
+                            <div class="text-center text-muted py-5 bg-light rounded-3" id="slider-no-images-placeholder">
+                                Seleccione una nota clínica del historial para cargar la comparación de imágenes.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: BUDGETS & PAYMENTS -->
+            <div id="view-presupuestos" class="app-view d-none animate-fade-in">
+                <div class="alert alert-info" id="presupuestos-no-patient-alert">
+                    Debe de seleccionar a un Paciente activo en la barra de búsqueda superior para administrar sus presupuestos y pagos.
+                </div>
+
+                <div class="row g-4 d-none" id="presupuestos-content">
+                    <div class="col-md-7">
+                        <!-- Budgets list -->
+                        <div class="card glass-panel p-4 mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold mb-0">Plan de Tratamientos y Presupuestos</h5>
+                                <button class="btn btn-primary btn-sm view-staff-only" id="btn-add-treatment-modal">
+                                    <i class="fa-solid fa-plus me-1"></i> Nuevo Presupuesto
+                                </button>
+                            </div>
+                            
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Tratamiento</th>
+                                            <th>Costo</th>
+                                            <th>Tipo</th>
+                                            <th>Acción</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="treatment-budgets-tbody">
+                                        <tr>
+                                            <td colspan="5" class="text-center py-4">Cargando tratamientos...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Balances & Debt info -->
+                        <div class="card glass-panel p-4">
+                            <h5 class="fw-bold mb-3">Estado de Cuenta del Paciente</h5>
+                            <div class="row g-3">
+                                <div class="col-md-4">
+                                    <div class="card bg-light border-0 p-3 text-center">
+                                        <h6 class="text-muted small mb-1">Monto Total Tratamientos</h6>
+                                        <h4 class="fw-bold text-dark mb-0" id="payment-stat-total-treatments">$0.00</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-success border-0 p-3 text-center text-white">
+                                        <h6 class="text-white small mb-1">Pagado a la fecha</h6>
+                                        <h4 class="fw-bold text-white mb-0" id="payment-stat-total-paid">$0.00</h4>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-danger bg-opacity-10 border-0 p-3 text-center">
+                                        <h6 class="text-danger small mb-1">Deuda pendiente</h6>
+                                        <h4 class="fw-bold text-danger mb-0" id="payment-stat-total-debt">$0.00</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5">
+                        <!-- Register payment (Staff only) -->
+                        <div class="card glass-panel p-4 mb-4 view-staff-only">
+                            <h5 class="fw-bold mb-3">Registrar Pago del Paciente</h5>
+                            
+                            <form id="form-register-payment">
+                                <div class="mb-3">
+                                    <label for="payment-form-treatment" class="form-label fw-semibold">Tratamiento Asignado:</label>
+                                    <select id="payment-form-treatment" class="form-select" required>
+                                        <option value="">Seleccione el tratamiento a abonar...</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="payment-form-amount" class="form-label fw-semibold">Monto a pagar ($) *</label>
+                                    <input type="number" step="0.01" id="payment-form-amount" class="form-control" required placeholder="0.00">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold">Firma de Aceptación del Paciente *</label>
+                                    <div class="signature-container">
+                                        <canvas id="payment-signature-canvas" class="signature-canvas"></canvas>
+                                    </div>
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <small class="text-muted">Dibuje la firma dentro del recuadro.</small>
+                                        <button type="button" class="btn btn-outline-danger btn-xs py-0 px-2" id="btn-clear-signature">Limpiar</button>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100 py-2.5 fw-semibold shadow-sm">
+                                    <i class="fa-solid fa-receipt me-2"></i>Registrar Pago y Firma
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Payments list -->
+                        <div class="card glass-panel p-4">
+                            <h5 class="fw-bold mb-3">Historial de Pagos Realizados</h5>
+                            <div id="payments-history-list" class="d-flex flex-column gap-2">
+                                <div class="text-center text-muted py-3">No hay pagos registrados.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- VIEW: SMART AGENDA / CALENDAR -->
+            <div id="view-agenda" class="app-view d-none animate-fade-in">
+                <div class="row g-4">
+                    <div class="col-md-8">
+                        <div class="card glass-panel p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+                                <h5 class="fw-bold mb-0"><i class="fa-regular fa-calendar-days text-primary me-2"></i>Calendario de Citas</h5>
+                                
+                                <div class="d-flex align-items-center gap-2">
+                                    <button class="btn btn-light btn-sm" id="btn-calendar-prev"><i class="fa-solid fa-chevron-left"></i></button>
+                                    <h6 class="fw-bold mb-0 text-center" style="width: 150px;" id="calendar-month-year">Junio 2026</h6>
+                                    <button class="btn btn-light btn-sm" id="btn-calendar-next"><i class="fa-solid fa-chevron-right"></i></button>
+                                </div>
+
+                                <button class="btn btn-primary btn-sm rounded-pill px-3" id="btn-new-appointment">
+                                    <i class="fa-solid fa-calendar-plus me-1"></i> Agendar Cita
+                                </button>
+                            </div>
+
+                            <!-- Calendar Grid -->
+                            <div class="calendar-grid" id="calendar-grid-container">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <!-- Appointments for selected day -->
+                        <div class="card glass-panel p-4 mb-4">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-calendar-day text-success me-2"></i>Citas del Día Seleccionado</h5>
+                            <p class="text-muted small" id="selected-calendar-date-label">Seleccione un día del calendario.</p>
+                            
+                            <div class="d-flex flex-column gap-2" id="selected-day-appointments-list">
+                                <div class="text-center text-muted py-4">No hay citas registradas para este día.</div>
+                            </div>
+                        </div>
+
+                        <!-- Search Citas -->
+                        <div class="card glass-panel p-4">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-clock-rotate-left text-warning me-2"></i>Búsqueda de Citas Históricas</h5>
+                            <div class="mb-3">
+                                <label for="appt-search-start" class="form-label small fw-semibold">Fecha Inicio</label>
+                                <input type="date" id="appt-search-start" class="form-control form-control-sm">
+                            </div>
+                            <div class="mb-3">
+                                <label for="appt-search-end" class="form-label small fw-semibold">Fecha Fin</label>
+                                <input type="date" id="appt-search-end" class="form-control form-control-sm">
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm w-100" id="btn-search-appointments-range">
+                                <i class="fa-solid fa-magnifying-glass me-1"></i> Buscar Historial de Citas
+                            </button>
+
+                            <div class="mt-3 d-none" id="appt-search-results-container">
+                                <h6 class="fw-bold small mb-2">Resultados de búsqueda:</h6>
+                                <div class="d-flex flex-column gap-2 overflow-y-auto" style="max-height: 180px;" id="appt-search-results-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <!-- VIEW: CLINICAL REPORTS (Doctor & Assistant only) -->
+            <div id="view-reportes" class="app-view d-none animate-fade-in">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card glass-panel p-4 mb-4">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-users text-primary me-2"></i>Historial de Crecimiento de Pacientes</h5>
+                            <div style="position: relative; height: 260px; width: 100%;">
+                                <canvas id="chart-patients-growth"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card glass-panel p-4 mb-4">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-calendar-check text-success me-2"></i>Historial de Citas por Día/Semana/Mes</h5>
+                            <div style="position: relative; height: 260px; width: 100%;">
+                                <canvas id="chart-appointments-summary"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card glass-panel p-4">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-scale-balanced text-warning me-2"></i>Resumen de Ingresos y Egresos de la Clínica</h5>
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div style="position: relative; height: 320px; width: 100%;">
+                                        <canvas id="chart-finances"></canvas>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card bg-light border-0 p-3 h-100 d-flex flex-column justify-content-between">
+                                        <div>
+                                            <h6 class="fw-bold mb-3">Balance Financiero</h6>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Total Ingresos:</span>
+                                                <span class="fw-bold text-success" id="report-financial-income">$0.00</span>
+                                            </div>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Total Egresos:</span>
+                                                <span class="fw-bold text-danger" id="report-financial-expenses">$0.00</span>
+                                            </div>
+                                            <hr>
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <span>Balance Neto:</span>
+                                                <span class="fw-bold" id="report-financial-balance">$0.00</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-outline-primary btn-sm mt-3" onclick="window.print();"><i class="fa-solid fa-print me-1"></i> Imprimir Reporte Completo</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIEW: CATALOGS & CONFIGURATIONS -->
+            <div id="view-catalogos" class="app-view d-none animate-fade-in">
+                <div class="row g-4">
+                    <!-- General Settings -->
+                    <div class="col-md-6">
+                        <div class="card glass-panel p-4">
+                            <h5 class="fw-bold mb-4"><i class="fa-solid fa-palette text-primary me-2"></i>Personalización de Colores, Logo y Fondos</h5>
+                            <form id="form-config-site">
+                                <div class="mb-3">
+                                    <label for="config-site-name" class="form-label fw-semibold">Nombre de la Clínica *</label>
+                                    <input type="text" id="config-site-name" class="form-control" required>
+                                </div>
+                                <div class="row g-3 mb-3">
+                                    <div class="col-6">
+                                        <label for="config-primary-color" class="form-label fw-semibold">Color Primario</label>
+                                        <input type="color" id="config-primary-color" class="form-control form-control-color w-100">
+                                    </div>
+                                    <div class="col-6">
+                                        <label for="config-secondary-color" class="form-label fw-semibold">Color Secundario</label>
+                                        <input type="color" id="config-secondary-color" class="form-control form-control-color w-100">
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="config-bg-color" class="form-label fw-semibold">Color de Fondo de Plataforma</label>
+                                    <input type="color" id="config-bg-color" class="form-control form-control-color w-100">
+                                </div>
+                                <div class="mb-4">
+                                    <label for="config-logo-file" class="form-label fw-semibold">Logo de Clínica (Cargar nueva imagen)</label>
+                                    <input type="file" id="config-logo-file" class="form-control" accept="image/*">
+                                    <input type="hidden" id="config-logo-base64">
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100"><i class="fa-solid fa-floppy-disk me-1"></i> Guardar Cambios Estéticos</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Non-working days settings -->
+                    <div class="col-md-6">
+                        <div class="card glass-panel p-4 h-100 d-flex flex-column justify-content-between">
+                            <div>
+                                <h5 class="fw-bold mb-3"><i class="fa-solid fa-calendar-xmark text-danger me-2"></i>Fechas y Horario NO Laborables</h5>
+                                <p class="text-muted small">Agregue días festivos o no laborales en los cuales el sistema no permitirá agendar citas.</p>
+                                
+                                <form id="form-config-non-working" class="bg-light p-3 rounded-3 mb-3 border-0">
+                                    <div class="row g-2">
+                                        <div class="col-md-6">
+                                            <input type="date" id="non-working-date" class="form-control form-control-sm" required>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" id="non-working-desc" class="form-control form-control-sm" placeholder="Descripción festivo..." required>
+                                        </div>
+                                        <div class="col-12 mt-2">
+                                            <button type="submit" class="btn btn-danger btn-sm w-100"><i class="fa-solid fa-plus me-1"></i>Bloquear Fecha</button>
+                                        </div>
+                                    </div>
+                                </form>
+
+                                <h6 class="fw-bold small mb-2">Fechas Bloqueadas:</h6>
+                                <div class="overflow-y-auto" style="max-height: 180px;">
+                                    <ul class="list-group list-group-flush" id="config-non-working-list">
+                                        <!-- Dynamically populated -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Treatments and Costs Catalog -->
+                    <div class="col-md-6">
+                        <div class="card glass-panel p-4">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-tags text-success me-2"></i>Configuración de Tratamientos y Costos</h5>
+                            
+                            <form id="form-config-treatment" class="bg-light p-3 rounded-3 mb-3 border-0">
+                                <input type="hidden" id="config-treatment-id" value="0">
+                                <div class="row g-2">
+                                    <div class="col-md-7">
+                                        <input type="text" id="config-treatment-desc" class="form-control form-control-sm" placeholder="Descripción Tratamiento..." required>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="number" step="0.01" id="config-treatment-price" class="form-control form-control-sm" placeholder="Costo ($)..." required>
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <button type="submit" class="btn btn-success btn-sm w-100"><i class="fa-solid fa-plus me-1"></i>Agregar al Catálogo</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <h6 class="fw-bold small mb-2">Tratamientos Disponibles:</h6>
+                            <div class="overflow-y-auto" style="max-height: 250px;">
+                                <ul class="list-group list-group-flush" id="config-treatment-list">
+                                    <!-- Populated dynamically -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Patient typification colors catalog -->
+                    <div class="col-md-6">
+                        <div class="card glass-panel p-4 h-100">
+                            <h5 class="fw-bold mb-3"><i class="fa-solid fa-circle-nodes text-warning me-2"></i>Tipificación de Pacientes</h5>
+                            <p class="text-muted small">Configuración de niveles de antecedente y el color correspondiente para su identificación visual.</p>
+                            
+                            <form id="form-config-typification" class="bg-light p-3 rounded-3 mb-3 border-0">
+                                <input type="hidden" id="config-typification-id" value="0">
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        <input type="text" id="config-typification-level" class="form-control form-control-sm" placeholder="Nivel..." required>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input type="text" id="config-typification-desc" class="form-control form-control-sm" placeholder="Descripción..." required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="color" id="config-typification-color" class="form-control form-control-color w-100 form-control-sm" value="#0d6efd">
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <button type="submit" class="btn btn-warning btn-sm w-100 text-dark fw-semibold"><i class="fa-solid fa-plus me-1"></i>Agregar Categoría</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <h6 class="fw-bold small mb-2">Categorías Activas:</h6>
+                            <ul class="list-group list-group-flush" id="config-typification-list">
+                                <!-- Populated dynamically -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- USER FORM MODAL -->
+    <div class="modal fade" id="userFormModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <form id="form-user" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-bold modal-title" id="userModalTitle">Registro de Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="user-form-id" name="id_Usuario" value="0">
+                    
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label for="user-form-name" class="form-label fw-semibold">Nombre *</label>
+                            <input type="text" id="user-form-name" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="user-form-ap-pat" class="form-label fw-semibold">Apellido Paterno *</label>
+                            <input type="text" id="user-form-ap-pat" class="form-control" required>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="user-form-ap-mat" class="form-label fw-semibold">Apellido Materno</label>
+                            <input type="text" id="user-form-ap-mat" class="form-control">
+                        </div>
+
+                        <div class="col-md-4">
+                            <label for="user-form-role" class="form-label fw-semibold">Perfil *</label>
+                            <select id="user-form-role" class="form-select" required>
+                                <option value="">Seleccione...</option>
+                                <!-- Dynamically filled -->
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="user-form-email" class="form-label fw-semibold">Correo Electrónico *</label>
+                            <input type="email" id="user-form-email" class="form-control" required>
+                        </div>
+                        <div class="col-md-4" id="user-form-pass-group">
+                            <label for="user-form-pass" class="form-label fw-semibold">Contraseña *</label>
+                            <input type="password" id="user-form-pass" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label for="user-form-sex" class="form-label fw-semibold">Género</label>
+                            <select id="user-form-sex" class="form-select">
+                                <option value="Mujer">Mujer</option>
+                                <option value="Hombre">Hombre</option>
+                                <option value="Otro">Otro</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="user-form-birth" class="form-label fw-semibold">F. Nacimiento</label>
+                            <input type="date" id="user-form-birth" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="user-form-phone" class="form-label fw-semibold">Teléfono</label>
+                            <input type="tel" id="user-form-phone" class="form-control">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="user-form-occupation" class="form-label fw-semibold">Ocupación</label>
+                            <input type="text" id="user-form-occupation" class="form-control">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="user-form-address" class="form-label fw-semibold">Domicilio</label>
+                            <input type="text" id="user-form-address" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="user-form-emerg" class="form-label fw-semibold">Contacto de Emergencia</label>
+                            <input type="text" id="user-form-emerg" class="form-control" placeholder="Nombre y Teléfono">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="user-form-photo-file" class="form-label fw-semibold">Foto de Perfil</label>
+                            <div class="d-flex align-items-center gap-3">
+                                <img id="user-form-photo-preview" src="" alt="Vista previa" class="rounded-circle border border-secondary border-opacity-25" style="width: 50px; height: 50px; object-fit: cover; display: none;">
+                                <div class="flex-grow-1">
+                                    <input type="file" id="user-form-photo-file" class="form-control" accept="image/*">
+                                    <input type="hidden" id="user-form-photo-base64">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Patient Specific Fields (Shown only if Role = 5 / Paciente) -->
+                        <div class="col-12 d-none" id="patient-only-fields">
+                            <div class="card bg-light p-3 border-0">
+                                <h6 class="fw-bold mb-3"><i class="fa-solid fa-circle-info text-primary me-2"></i>Información del Paciente</h6>
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="user-form-typification" class="form-label fw-semibold">Tipificación del Paciente</label>
+                                        <select id="user-form-typification" class="form-select">
+                                            <option value="">Seleccione...</option>
+                                            <!-- Dynamically filled -->
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <label for="user-form-motive" class="form-label fw-semibold">Motivo de Consulta</label>
+                                        <textarea id="user-form-motive" class="form-control" rows="2" placeholder="Describa el motivo por el cual asiste a consulta..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label for="user-form-remarks" class="form-label fw-semibold">Observaciones Clínicas / Generales</label>
+                            <textarea id="user-form-remarks" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary" id="btn-save-user">Guardar Usuario</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ADD TREATMENT BUDGET FORM MODAL -->
+    <div class="modal fade" id="addTreatmentModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="form-add-treatment" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-bold modal-title">Agregar Presupuesto / Tratamiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="treatment-select-catalog" class="form-label fw-semibold">Seleccione Tratamiento *</label>
+                        <select id="treatment-select-catalog" class="form-select" required>
+                            <option value="">Seleccione...</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="treatment-budget-price" class="form-label fw-semibold">Monto Sugerido ($)</label>
+                        <input type="number" step="0.01" id="treatment-budget-price" class="form-control" readonly>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="treatment-budget-is-presupuesto" checked>
+                        <label class="form-check-label fw-semibold" for="treatment-budget-is-presupuesto">Registrar solo como Presupuesto (Información previa)</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- NEW APPOINTMENT FORM MODAL -->
+    <div class="modal fade" id="appointmentFormModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="form-appointment" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-bold modal-title">Agendar Cita Dental</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3" id="appt-form-patient-select-group">
+                        <label for="appt-form-patient" class="form-label fw-semibold">Paciente *</label>
+                        <select id="appt-form-patient" class="form-select" required>
+                            <option value="">Seleccione el paciente...</option>
+                            <!-- Dynamically filled with patient list -->
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appt-form-date" class="form-label fw-semibold">Fecha *</label>
+                        <input type="date" id="appt-form-date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appt-form-time" class="form-label fw-semibold">Hora de la cita *</label>
+                        <select id="appt-form-time" class="form-select" required>
+                            <option value="">Seleccione el horario...</option>
+                            <option value="09:00">09:00 AM</option>
+                            <option value="10:00">10:00 AM</option>
+                            <option value="11:00">11:00 AM</option>
+                            <option value="12:00">12:00 PM</option>
+                            <option value="13:00">01:00 PM</option>
+                            <option value="14:00">02:00 PM</option>
+                            <option value="15:00">03:00 PM</option>
+                            <option value="16:00">04:00 PM</option>
+                            <option value="17:00">05:00 PM</option>
+                            <option value="18:00">06:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="appt-form-motive" class="form-label fw-semibold">Motivo / Tratamiento de cita</label>
+                        <input type="text" id="appt-form-motive" class="form-control" placeholder="Ej. Limpieza, Consulta inicial, Endodoncia">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Agendar Cita</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CHANGE PASSWORD MODAL (Visible for all) -->
+    <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="form-change-password" class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-bold modal-title">Cambiar Contraseña</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="change-pass-current" class="form-label fw-semibold">Contraseña Actual *</label>
+                        <input type="password" id="change-pass-current" class="form-control" required placeholder="••••••••">
+                    </div>
+                    <div class="mb-3">
+                        <label for="change-pass-new" class="form-label fw-semibold">Nueva Contraseña *</label>
+                        <input type="password" id="change-pass-new" class="form-control" required placeholder="Mínimo 6 caracteres">
+                    </div>
+                    <div class="mb-3">
+                        <label for="change-pass-confirm" class="form-label fw-semibold">Confirmar Nueva Contraseña *</label>
+                        <input type="password" id="change-pass-confirm" class="form-control" required placeholder="Repita la nueva contraseña">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Cambiar Contraseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- PATHOLOGY MODAL SELECTION -->
+    <div class="modal fade" id="pathologySelectionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-bold modal-title">Patologías: <span id="modal-relative-title">Paciente</span></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted small mb-3">Marque todas las enfermedades que apliquen para este familiar/paciente:</p>
+                    <div id="pathologies-checklist" class="row row-cols-2 g-3">
+                        <!-- Populated dynamically: Diabetes, HTA, Cardiopatías, Neoplasias, Epilepsia, Malformaciones, SIDA, ER, Hepatitis, Artritis, Otras -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary w-100" data-bs-dismiss="modal">Confirmar Marcaje</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RECOVER PASSWORD MODAL -->
+    <div class="modal fade" id="recoverPasswordModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="fw-bold modal-title">Recuperación de Contraseña</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Por favor ingrese su correo electrónico registrado. Le enviaremos un enlace de recuperación temporal (simulado).</p>
+                    <div class="mb-3">
+                        <label for="recover-email" class="form-label fw-semibold">Correo Electrónico</label>
+                        <input type="email" id="recover-email" class="form-control" placeholder="ejemplo@correo.com" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="btn-send-recover">Enviar Enlace</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery and Bootstrap 5 JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js for reports -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom App JS modules -->
+    <script src="js/mock_images.js"></script>
+    <script src="js/odontograma_assets.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- GLOBAL DENTAL LOADER -->
+    <div id="global-dental-loader" style="display: none;">
+        <div class="dental-loader-backdrop"></div>
+        <div class="dental-loader-card">
+            <div class="dental-loader-tooth-container">
+                <div class="dental-loader-bubble bubble-1"></div>
+                <div class="dental-loader-bubble bubble-2"></div>
+                <div class="dental-loader-bubble bubble-3"></div>
+                <img id="dental-loader-logo-large" src="" alt="Logo de la Clínica" class="rounded-circle border border-primary border-opacity-25" style="width: 80px; height: 80px; object-fit: cover; z-index: 2; animation: toothFloat 2s ease-in-out infinite;">
+                <div class="dental-loader-ring"></div>
+            </div>
+            <h5 class="fw-bold mt-4 mb-2 text-dark" id="dental-loader-site-name">Clínica Dental</h5>
+            <div class="dental-loader-text text-primary font-monospace fw-semibold" id="dental-loader-message">Preparando instrumental...</div>
+            <div class="progress mt-3 bg-light" style="height: 6px; width: 180px; margin: 0 auto; border-radius: 3px;">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar" style="width: 100%"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
