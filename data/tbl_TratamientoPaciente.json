@@ -5,6 +5,7 @@
     "FechaFinTrat": null,
     "id_Tratamiento": 3,
     "id_User": 5,
-    "Presupuesto": 0
+    "Presupuesto": 0,
+    "Monto": null
   }
 ]

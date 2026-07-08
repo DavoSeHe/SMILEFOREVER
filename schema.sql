@@ -137,7 +137,8 @@ GO
 CREATE TABLE [dbo].[tbl_MapavsOdontograma](
 	[id_Usuario] [int] NULL,
 	[id_Diente] [int] NULL,
-	[id_MapaOdontograma] [int] NULL
+	[id_MapaOdontograma] [int] NULL,
+	[Diagnostico] [varchar](1000) NULL
 ) ON [PRIMARY];
 GO
 
@@ -236,7 +237,8 @@ CREATE TABLE [dbo].[tbl_TratamientoPaciente](
 	[FechaFinTrat] [datetime] NULL,
 	[id_Tratamiento] [int] NOT NULL,
 	[id_User] [int] NOT NULL,
-	[Presupuesto] [bit] NOT NULL DEFAULT 1 -- 1 for budget, 0 for active/done treatment
+	[Presupuesto] [bit] NOT NULL DEFAULT 1, -- 1 for budget, 0 for active/done treatment
+	[Monto] [decimal](12, 2) NULL
 ) ON [PRIMARY];
 GO
 

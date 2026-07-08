@@ -914,8 +914,13 @@ $(document).ready(function() {
                     let isMolar = t.Acronimo === "Muela" || t.id_MapaOdontograma === 18; // Default 18 molar
                     let svg = ODONTOGRAMA_ASSETS.renderToothSVG(t.id_Diente, t.id_MapaOdontograma, t.Acronimo, isMolar);
                     
+                    let titleAttr = `Diente #${t.id_Diente}: ${t.Descripcion || 'Sin registrar'}`;
+                    if (t.Diagnostico) {
+                        titleAttr += `\nDiagnóstico: ${t.Diagnostico}`;
+                    }
+
                     let box = $(`
-                        <div class="tooth-box" data-id="${t.id_Diente}" data-map-id="${t.id_MapaOdontograma}" data-is-molar="${isMolar ? 1 : 0}">
+                        <div class="tooth-box" data-id="${t.id_Diente}" data-map-id="${t.id_MapaOdontograma}" data-is-molar="${isMolar ? 1 : 0}" data-diagnostico="${t.Diagnostico || ''}" title="${titleAttr}">
                             ${svg}
                             <div class="small fw-semibold text-muted" style="font-size: 0.65rem;">${t.Acronimo}</div>
                         </div>
@@ -944,11 +949,13 @@ $(document).ready(function() {
         selectedTooth = {
             id: $(this).data("id"),
             mapId: $(this).data("map-id"),
-            isMolar: $(this).data("is-molar")
+            isMolar: $(this).data("is-molar"),
+            diagnostico: $(this).data("diagnostico") || ""
         };
 
         $("#assign-tooth-number").text("#" + selectedTooth.id);
         $("#assign-treatment-select").val(selectedTooth.mapId);
+        $("#assign-tooth-diagnosis").val(selectedTooth.diagnostico);
         $("#tooth-assign-panel").removeClass("d-none");
     });
 
@@ -957,6 +964,7 @@ $(document).ready(function() {
         if (!activePatient || !selectedTooth) return;
 
         let mapId = $("#assign-treatment-select").val();
+        let diag = $("#assign-tooth-diagnosis").val();
 
         $.ajax({
             url: "/api/odontograma",
@@ -965,7 +973,8 @@ $(document).ready(function() {
             data: JSON.stringify({
                 id_usuario: activePatient.id_Usuario,
                 id_diente: selectedTooth.id,
-                id_mapa: mapId
+                id_mapa: mapId,
+                diagnostico: diag
             }),
             success: function() {
                 // Reload active teeth row
@@ -1205,7 +1214,8 @@ $(document).ready(function() {
         let payload = {
             id_usuario: activePatient.id_Usuario,
             id_tratamiento: $("#treatment-select-catalog").val(),
-            presupuesto: $("#treatment-budget-is-presupuesto").is(":checked")
+            presupuesto: $("#treatment-budget-is-presupuesto").is(":checked"),
+            monto: parseFloat($("#treatment-budget-price").val())
         };
 
         $.ajax({

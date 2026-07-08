@@ -710,7 +710,8 @@ namespace DentalClinic
                         ISNULL(mvo.id_MapaOdontograma, o.id_MapaOdontograma) as id_MapaOdontograma,
                         mo.Descripcion,
                         mo.Url,
-                        mo.Acronimo
+                        mo.Acronimo,
+                        mvo.Diagnostico
                     FROM tbl_Odontograma o
                     LEFT JOIN tbl_MapavsOdontograma mvo ON o.id_Diente = mvo.id_Diente AND mvo.id_Usuario = @UserId
                     JOIN tbl_MapaOdontograma mo ON ISNULL(mvo.id_MapaOdontograma, o.id_MapaOdontograma) = mo.id_MapaOdontograma
@@ -734,6 +735,7 @@ namespace DentalClinic
                 int userId = Convert.ToInt32(body["id_usuario"]);
                 int toothId = Convert.ToInt32(body["id_diente"]);
                 int mapId = Convert.ToInt32(body["id_mapa"]); // The treatment ID from tbl_MapaOdontograma
+                string diagnostico = body.ContainsKey("diagnostico") ? body["diagnostico"]?.ToString() : null;
 
                 // Check if treatment exists for this user and tooth
                 string checkQuery = "SELECT 1 FROM tbl_MapavsOdontograma WHERE id_Usuario = @UserId AND id_Diente = @ToothId";
@@ -749,18 +751,19 @@ namespace DentalClinic
                 {
                     { "@UserId", userId },
                     { "@ToothId", toothId },
-                    { "@MapId", mapId }
+                    { "@MapId", mapId },
+                    { "@Diagnostico", (object)diagnostico ?? DBNull.Value }
                 };
 
                 if (checkDt.Rows.Count > 0)
                 {
                     // Update
-                    sql = "UPDATE tbl_MapavsOdontograma SET id_MapaOdontograma = @MapId WHERE id_Usuario = @UserId AND id_Diente = @ToothId";
+                    sql = "UPDATE tbl_MapavsOdontograma SET id_MapaOdontograma = @MapId, Diagnostico = @Diagnostico WHERE id_Usuario = @UserId AND id_Diente = @ToothId";
                 }
                 else
                 {
                     // Insert
-                    sql = "INSERT INTO tbl_MapavsOdontograma (id_Usuario, id_Diente, id_MapaOdontograma) VALUES (@UserId, @ToothId, @MapId)";
+                    sql = "INSERT INTO tbl_MapavsOdontograma (id_Usuario, id_Diente, id_MapaOdontograma, Diagnostico) VALUES (@UserId, @ToothId, @MapId, @Diagnostico)";
                 }
 
                 DatabaseHelper.ExecuteNonQuery(sql, saveParams);
@@ -837,7 +840,7 @@ namespace DentalClinic
 
                 int userId = int.Parse(userIdStr);
                 string query = @"
-                    SELECT tp.id_TratPaciente, tp.FechaIniTrat, tp.FechaFinTrat, tp.Presupuesto, t.id_Tratamiento, t.Tratamiento, t.Monto
+                    SELECT tp.id_TratPaciente, tp.FechaIniTrat, tp.FechaFinTrat, tp.Presupuesto, t.id_Tratamiento, t.Tratamiento, ISNULL(tp.Monto, t.Monto) as Monto
                     FROM tbl_TratamientoPaciente tp
                     JOIN tbl_Tratamiento t ON tp.id_Tratamiento = t.id_Tratamiento
                     WHERE tp.id_User = @UserId
@@ -854,16 +857,23 @@ namespace DentalClinic
                 int userId = Convert.ToInt32(body["id_usuario"]);
                 int treatmentId = Convert.ToInt32(body["id_tratamiento"]);
                 bool isBudget = Convert.ToBoolean(body["presupuesto"]);
+                
+                decimal? customMonto = null;
+                if (body.ContainsKey("monto") && body["monto"] != null)
+                {
+                    customMonto = Convert.ToDecimal(body["monto"]);
+                }
 
                 string query = @"
-                    INSERT INTO tbl_TratamientoPaciente (FechaIniTrat, id_Tratamiento, id_User, Presupuesto)
-                    VALUES (GETDATE(), @TreatmentId, @UserId, @Presupuesto)";
+                    INSERT INTO tbl_TratamientoPaciente (FechaIniTrat, id_Tratamiento, id_User, Presupuesto, Monto)
+                    VALUES (GETDATE(), @TreatmentId, @UserId, @Presupuesto, @Monto)";
 
                 var parameters = new Dictionary<string, object>
                 {
                     { "@TreatmentId", treatmentId },
                     { "@UserId", userId },
-                    { "@Presupuesto", isBudget ? 1 : 0 }
+                    { "@Presupuesto", isBudget ? 1 : 0 },
+                    { "@Monto", (object)customMonto ?? DBNull.Value }
                 };
 
                 DatabaseHelper.ExecuteNonQuery(query, parameters);

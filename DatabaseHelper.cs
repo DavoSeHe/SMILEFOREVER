@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.Data.Sqlite;
@@ -12,9 +13,23 @@ namespace DentalClinic
     {
         private static readonly SqliteConnection _conn;
         private static readonly string _dataFolder;
+        private static readonly string SqlServerConnectionString;
+        private static readonly bool UseSqlServer;
 
         static DatabaseHelper()
         {
+            SqlServerConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+            UseSqlServer = !string.IsNullOrEmpty(SqlServerConnectionString);
+
+            if (UseSqlServer)
+            {
+                Console.WriteLine("[INFO] Iniciando base de datos en modo SQL Server persistente.");
+                RunSqlServerMigrations();
+                return;
+            }
+
+            Console.WriteLine("[INFO] Iniciando base de datos en modo local con archivos JSON.");
+
             // Locate the project root by finding schema.sql
             string schemaPath = FindSchemaSql();
             string rootDir = !string.IsNullOrEmpty(schemaPath) ? Path.GetDirectoryName(schemaPath) : AppDomain.CurrentDomain.BaseDirectory;
@@ -31,7 +46,6 @@ namespace DentalClinic
             _conn.Open();
 
             // Register SQL Server equivalent functions in SQLite (GETDATE)
-            // Note: ISNULL is a reserved keyword in SQLite, so we translate it to ifnull in queries instead.
             _conn.CreateFunction("GETDATE", () => 
                 DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
 
@@ -317,67 +331,162 @@ namespace DentalClinic
             }
         }
 
+        private static void BindSqlServerParameters(SqlCommand cmd, Dictionary<string, object> parameters)
+        {
+            if (parameters != null)
+            {
+                foreach (var param in parameters)
+                {
+                    string key = param.Key.StartsWith("@") ? param.Key : "@" + param.Key;
+                    cmd.Parameters.AddWithValue(key, param.Value ?? DBNull.Value);
+                }
+            }
+        }
+
         public static DataTable ExecuteQuery(string query, Dictionary<string, object> parameters = null)
         {
-            string sql = TranslateQuery(query);
-            
-            using (var cmd = new SqliteCommand(sql, _conn))
+            if (UseSqlServer)
             {
-                BindParameters(cmd, parameters);
-                using (var reader = cmd.ExecuteReader())
+                using (var conn = new SqlConnection(SqlServerConnectionString))
+                using (var cmd = new SqlCommand(query, conn))
                 {
-                    var dt = new DataTable();
-                    
-                    // Create columns dynamically with AllowDBNull = true to avoid ADO.NET constraints check errors
-                    for (int i = 0; i < reader.FieldCount; i++)
+                    conn.Open();
+                    BindSqlServerParameters(cmd, parameters);
+                    using (var adapter = new SqlDataAdapter(cmd))
                     {
-                        dt.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
+                        var dt = new DataTable();
+                        adapter.Fill(dt);
+                        return dt;
                     }
-                    
-                    // Load rows manually to prevent constraint violation exceptions
-                    while (reader.Read())
+                }
+            }
+            else
+            {
+                string sql = TranslateQuery(query);
+                using (var cmd = new SqliteCommand(sql, _conn))
+                {
+                    BindParameters(cmd, parameters);
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        var row = dt.NewRow();
+                        var dt = new DataTable();
+                        
+                        // Create columns dynamically with AllowDBNull = true to avoid ADO.NET constraints check errors
                         for (int i = 0; i < reader.FieldCount; i++)
                         {
-                            object val = reader.GetValue(i);
-                            row[i] = val ?? DBNull.Value;
+                            dt.Columns.Add(reader.GetName(i), reader.GetFieldType(i));
                         }
-                        dt.Rows.Add(row);
+                        
+                        // Load rows manually to prevent constraint violation exceptions
+                        while (reader.Read())
+                        {
+                            var row = dt.NewRow();
+                            for (int i = 0; i < reader.FieldCount; i++)
+                            {
+                                object val = reader.GetValue(i);
+                                row[i] = val ?? DBNull.Value;
+                            }
+                            dt.Rows.Add(row);
+                        }
+                        
+                        return dt;
                     }
-                    
-                    return dt;
                 }
             }
         }
 
         public static int ExecuteNonQuery(string query, Dictionary<string, object> parameters = null)
         {
-            string sql = TranslateQuery(query);
-
-            using (var cmd = new SqliteCommand(sql, _conn))
+            if (UseSqlServer)
             {
-                BindParameters(cmd, parameters);
-                int rows = cmd.ExecuteNonQuery();
-                
-                SaveAllTablesToJson();
-                
-                return rows;
+                using (var conn = new SqlConnection(SqlServerConnectionString))
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    BindSqlServerParameters(cmd, parameters);
+                    return cmd.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                string sql = TranslateQuery(query);
+                using (var cmd = new SqliteCommand(sql, _conn))
+                {
+                    BindParameters(cmd, parameters);
+                    int rows = cmd.ExecuteNonQuery();
+                    SaveAllTablesToJson();
+                    return rows;
+                }
             }
         }
 
         public static object ExecuteScalar(string query, Dictionary<string, object> parameters = null)
         {
-            string sql = TranslateQuery(query);
-
-            using (var cmd = new SqliteCommand(sql, _conn))
+            if (UseSqlServer)
             {
-                BindParameters(cmd, parameters);
-                object result = cmd.ExecuteScalar();
-                
-                SaveAllTablesToJson();
-                
-                return result;
+                using (var conn = new SqlConnection(SqlServerConnectionString))
+                using (var cmd = new SqlCommand(query, conn))
+                {
+                    conn.Open();
+                    BindSqlServerParameters(cmd, parameters);
+                    return cmd.ExecuteScalar();
+                }
+            }
+            else
+            {
+                string sql = TranslateQuery(query);
+                using (var cmd = new SqliteCommand(sql, _conn))
+                {
+                    BindParameters(cmd, parameters);
+                    object result = cmd.ExecuteScalar();
+                    SaveAllTablesToJson();
+                    return result;
+                }
+            }
+        }
+
+        private static void RunSqlServerMigrations()
+        {
+            try
+            {
+                using (var conn = new SqlConnection(SqlServerConnectionString))
+                {
+                    conn.Open();
+                    
+                    // 1. Add Monto column to tbl_TratamientoPaciente if missing
+                    string checkQuery = @"
+                        IF NOT EXISTS (
+                            SELECT * FROM sys.columns 
+                            WHERE object_id = OBJECT_ID('dbo.tbl_TratamientoPaciente') 
+                            AND name = 'Monto'
+                        )
+                        BEGIN
+                            ALTER TABLE dbo.tbl_TratamientoPaciente ADD Monto decimal(12, 2) NULL;
+                        END";
+                    using (var cmd = new SqlCommand(checkQuery, conn))
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    // 2. Add Diagnostico column to tbl_MapavsOdontograma if missing
+                    string checkQuery2 = @"
+                        IF NOT EXISTS (
+                            SELECT * FROM sys.columns 
+                            WHERE object_id = OBJECT_ID('dbo.tbl_MapavsOdontograma') 
+                            AND name = 'Diagnostico'
+                        )
+                        BEGIN
+                            ALTER TABLE dbo.tbl_MapavsOdontograma ADD Diagnostico varchar(1000) NULL;
+                        END";
+                    using (var cmd2 = new SqlCommand(checkQuery2, conn))
+                    {
+                        cmd2.ExecuteNonQuery();
+                    }
+                }
+                Console.WriteLine("[INFO] Migración de base de datos SQL Server completada con éxito.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Error al ejecutar migraciones en SQL Server: {ex.Message}");
             }
         }
 
